@@ -1,3 +1,4 @@
+
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var SonicSocket = require('./sonic-socket.js');
 var SonicServer = require('./sonic-server.js');
@@ -8,6 +9,7 @@ module.exports = {
   SonicServer: SonicServer,
   SonicCoder: SonicCoder
 }
+window = Object.assign(window, module.exports);
 
 },{"./sonic-coder.js":3,"./sonic-server.js":4,"./sonic-socket.js":5}],2:[function(require,module,exports){
 function RingBuffer(maxLength) {
@@ -127,7 +129,7 @@ module.exports = SonicCoder;
 var RingBuffer = require('./ring-buffer.js');
 var SonicCoder = require('./sonic-coder.js');
 
-var audioContext = window.audioContext || new webkitAudioContext();
+var audioContext = new window.AudioContext() || new webkitAudioContext();
 /**
  * Extracts meaning from audio streams.
  *
@@ -415,10 +417,11 @@ SonicServer.prototype.restart = function() {
 
 module.exports = SonicServer;
 
+
 },{"./ring-buffer.js":2,"./sonic-coder.js":3}],5:[function(require,module,exports){
 var SonicCoder = require('./sonic-coder.js');
 
-var audioContext = window.audioContext || new webkitAudioContext();
+var audioContext = new window.AudioContext() || new webkitAudioContext();
 
 /**
  * Encodes text as audio streams.
@@ -476,5 +479,6 @@ SonicSocket.prototype.scheduleToneAt = function(freq, startTime, duration) {
 };
 
 module.exports = SonicSocket;
+
 
 },{"./sonic-coder.js":3}]},{},[1])
