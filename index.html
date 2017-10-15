@@ -5,10 +5,11 @@
 		Trying sonic net
 	</title>
 	<style type="text/css">
-		.send{
+		.send0, .send1{
 			background: #009688;
-			width: 40px;
+			width: 70px;
 			line-height: 30px;
+			margin: 5px;
 			color: #fff;
 		}
 	</style>
@@ -18,31 +19,35 @@
 	<script src="sonicnet.js"></script>
 </head>
 <body>
-	<div class="send">click</div>
+	<div class="send0">send 0</div>
+	<div class="send1">send 1</div>
 	<script>
 		var audioContext = new window.AudioContext() || new webkitAudioContext();
 		var ALPHABET = '01';
-		var MESSAGE = '1';
+		
 
-		var button = document.querySelector('.send');
-		button.addEventListener('click', onButton);
+		var button = document.querySelector('.send1');
+		document.querySelector('.send1').addEventListener('click', function(){onButton('1')});
+		document.querySelector('.send0').addEventListener('click', ()=>{onButton('0')});
 
-		function onButton() {
+		function onButton(string) {
 		  var d = document.createElement('p');
 
-		  d.innerText = "sending message";
+		  d.innerText = "sending message " + string;
 		  document.body.appendChild(d);
 		  ssocket = new SonicSocket({alphabet: ALPHABET, charDuration: 0.2});
-		  ssocket.send(MESSAGE);
+
+		  ssocket.send(string);
 		}
 		console.log(SonicSocket)
 
 		// On some other machine:
 		sserver = new SonicServer({alphabet: ALPHABET});
 		sserver.on('message', function(message) {
+		  console.log(sserver);
 		  var d = document.createElement('p');
 
-		  d.innerText = message + " Recived.";
+		  d.innerText = message + " Recived. " + (typeof message);
 		  document.body.appendChild(d);
 
 		  document.body.style.backgroundColor = '#' + Math.floor(Math.random(0,1)* 9 ) + Math.floor(Math.random(0,1)* 9 ) + Math.floor(Math.random(0,1)* 9 );
