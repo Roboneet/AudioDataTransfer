@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Trying sonic net
+	</title>
+	<style type="text/css">
+		.send{
+			background: #009688;
+			width: 40px;
+			line-height: 30px;
+			color: #fff;
+		}
+	</style>
+	<!-- <script src="lib/sonic-coder.js"></script>
+	<script src="lib/sonic-server.js"></script>
+	<script src="lib/sonic-socket.js"></script> -->
+	<script src="sonicnet.js"></script>
+</head>
+<body>
+	<div class="send">click</div>
+	<script>
+		var audioContext = new window.AudioContext() || new webkitAudioContext();
+		var ALPHABET = '01';
+		var MESSAGE = '1';
+
+		var button = document.querySelector('.send');
+		button.addEventListener('click', onButton);
+
+		function onButton() {
+		  ssocket = new SonicSocket({alphabet: ALPHABET, charDuration: 0.2});
+		  ssocket.send(MESSAGE);
+		}
+
+		// On some other machine:
+		sserver = new SonicServer({alphabet: ALPHABET});
+		sserver.on('message', function(message) {
+		  var d = document.createElement('p');
+		  d.innerText = message + " Recived.";
+		  document.body.appendChild(d);
+		  console.log(message);
+		});
+		sserver.start();
+	</script>
+</body>
+</html>
