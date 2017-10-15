@@ -28,7 +28,10 @@
 		button.addEventListener('click', onButton);
 
 		function onButton() {
-		  console.log('sending');
+		  var d = document.createElement('p');
+
+		  d.innerText = "sending message";
+		  document.body.appendChild(d);
 		  ssocket = new SonicSocket({alphabet: ALPHABET, charDuration: 0.2});
 		  ssocket.send(MESSAGE);
 		}
@@ -38,11 +41,15 @@
 		sserver = new SonicServer({alphabet: ALPHABET});
 		sserver.on('message', function(message) {
 		  var d = document.createElement('p');
+
 		  d.innerText = message + " Recived.";
 		  document.body.appendChild(d);
+
+		  document.body.style.backgroundColor = '#' + Math.floor(Math.random(0,1)* 9 ) + Math.floor(Math.random(0,1)* 9 ) + Math.floor(Math.random(0,1)* 9 );
 		  console.log('recived', message);
 		});
 		sserver.start();
+
 	</script>
 </body>
 </html>
